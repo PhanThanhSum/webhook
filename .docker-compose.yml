@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    image: webhook:latest
+    container_name: webhook
+    ports:
+      - "3000:3000"
