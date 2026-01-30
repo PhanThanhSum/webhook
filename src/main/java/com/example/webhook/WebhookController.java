@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.Date;
 
 @RestController
 public class WebhookController {
@@ -14,7 +17,7 @@ public class WebhookController {
     public String deploy() throws IOException, InterruptedException {
 
         System.out.println("Webhook received from DockerHub");
-
+        System.out.println(LocalDate.now());
         run("docker pull " + IMAGE);
         run("docker stop " + CONTAINER + " || true");
         run("docker rm " + CONTAINER + " || true");
@@ -33,6 +36,7 @@ public class WebhookController {
     private void run(String cmd) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder("bash", "-c", cmd);
         pb.inheritIO();
+        System.out.println(pb.command().toString());
         Process p = pb.start();
         p.waitFor();
     }
