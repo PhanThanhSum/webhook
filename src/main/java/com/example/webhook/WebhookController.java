@@ -10,6 +10,7 @@ import java.util.Date;
 
 @RestController
 public class WebhookController {
+    private static final String DOCKER = "/usr/bin/docker";
     private static final String IMAGE = "phanthanhsum/airlab:latest";
     private static final String CONTAINER = "airlab";
 
@@ -18,9 +19,9 @@ public class WebhookController {
 
         System.out.println("Webhook received from DockerHub");
         System.out.println(LocalDate.now());
-        run("docker pull " + IMAGE);
-        run("docker stop " + CONTAINER + " || true");
-        run("docker rm " + CONTAINER + " || true");
+        run(DOCKER + " pull " + IMAGE);
+        run( DOCKER+  " stop " + CONTAINER + " || true");
+        run(DOCKER + " rm " + CONTAINER + " || true");
 
         run("""
             docker run -d -p 80:8080 \
